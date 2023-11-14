@@ -1,17 +1,29 @@
 import { useState } from 'react';
 
-const Player = ({ name, symbol }) => {
+const Player = ({ initialName, symbol }) => {
+  const [playerName, setPlayerName] = useState(initialName);
   const [isEditMode, setIsEditMode] = useState(false);
 
   const handleClick = () => {
-    setIsEditMode(!isEditMode);
+    setIsEditMode((wasEditMode) => !wasEditMode);
+  };
+
+  const handleChange = (event) => {
+    setPlayerName(event.target.value);
   };
 
   return (
     <li>
       <span className="player">
-        {!isEditMode && <span className="player-name">{name}</span>}
-        {isEditMode && <input />}
+        {!isEditMode && <span className="player-name">{playerName}</span>}
+        {isEditMode && (
+          <input
+            type="text"
+            required
+            value={playerName}
+            onChange={handleChange}
+          />
+        )}
         <span className="player-symbol">{symbol}</span>
       </span>
       <button onClick={handleClick}>{!isEditMode ? 'Edit' : 'Save'}</button>
