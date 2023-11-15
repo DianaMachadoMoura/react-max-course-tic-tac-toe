@@ -1,27 +1,12 @@
-const INITIAL_VALUES = [
-  [null, null, null],
-  [null, null, null],
-  [null, null, null],
-];
-
-const GameBoard = ({ onSelectSquare, turns }) => {
-  let gameBoardValues = INITIAL_VALUES;
-
-  for (const turn of turns) {
-    const { square, playerSymbol } = turn;
-    const { row, col } = square;
-
-    gameBoardValues[row][col] = playerSymbol;
-  }
-
+const GameBoard = ({ onSelectSquare, boardValues }) => {
   return (
     <ol id="game-board">
-      {gameBoardValues.map((row, rowIndex) => (
+      {boardValues.map((row, rowIndex) => (
         <li key={rowIndex}>
           <ol>
             {row.map((colValue, colIndex) => (
               <li key={colIndex}>
-                <button onClick={() => onSelectSquare(rowIndex, colIndex)}>
+                <button onClick={() => onSelectSquare(rowIndex, colIndex)} disabled={!!colValue}>
                   {colValue}
                 </button>
               </li>
